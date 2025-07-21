@@ -4,7 +4,7 @@
 
 
 **Developer**: Jash Pandya  
-**Timeline**: 23rd May - 23rd June 2024  
+**Timeline**: 23rd May - 23rd June 2025  
 **Status**: Core features complete | *Deploying soon on Vercel/Render*  
 
 ---
