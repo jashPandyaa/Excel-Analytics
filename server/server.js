@@ -1,6 +1,39 @@
+// const express = require('express');
+// const dotenv = require('dotenv');
+// const cors = require('cors');
+// const connectDB = require('./config/db');
+// const authRoutes = require('./routes/authRoutes');
+// const fileRoutes = require('./routes/fileRoutes');
+// const protectedRoutes = require('./routes/protectedRoutes');
+// const errorMiddleware = require('./middlewares/errorMiddleware');
+// const adminRoutes = require('./routes/adminRoutes');
+// const dashboardRoutes = require('./routes/dashboardRoutes');
+
+// dotenv.config();
+// connectDB();
+
+// const app = express();
+// app.use(cors({
+//   origin: 'http://localhost:3000',
+//   credentials: true,
+// }));
+// app.use(express.json());
+
+// app.use('/api/auth', authRoutes);
+// app.use('/api/files', fileRoutes);
+// app.use('/api', protectedRoutes);
+// app.use('/api/admin', adminRoutes);
+// app.use('/api/dashboard', dashboardRoutes);
+
+// app.use(errorMiddleware);
+
+// const PORT = process.env.PORT || 5000;
+// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const path = require('path');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const fileRoutes = require('./routes/fileRoutes');
@@ -13,19 +46,45 @@ dotenv.config();
 connectDB();
 
 const app = express();
-app.use(cors({
-  origin: 'http://localhost:3000',
+
+// CORS configuration for production and development
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' 
+    ? [process.env.FRONTEND_URL || 'https://excel-analytics-jash.vercel.app']
+    : 'http://localhost:3000',
   credentials: true,
-}));
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
+// API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/files', fileRoutes);
 app.use('/api', protectedRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
+// Serve static files from React app in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+  
+  // Handle React routing, return all requests to React app
+  app.get('*', (req, res) => {
+    if (!req.path.startsWith('/api')) {
+      res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+    }
+  });
+}
+
 app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// For Vercel, export the app instead of listening
+if (process.env.NODE_ENV === 'production') {
+  module.exports = app;
+} else {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
