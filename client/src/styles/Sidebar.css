@@ -150,3 +150,32 @@ body.dark {
     display: block;
   }
 }
+
+/* Add to Sidebar.css */
+@media (max-width: 992px) {
+  .sidebar {
+    width: 200px;
+    padding: 1.5rem 1rem;
+  }
+  
+  .sidebar-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .nav-links a {
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: 280px;
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+}

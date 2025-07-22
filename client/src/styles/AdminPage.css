@@ -383,3 +383,41 @@ button[title="Delete upload"]:hover {
     min-width: 550px;
   }
 }
+
+/* Add to AdminPage.css */
+@media (max-width: 1200px) {
+  .admin-container {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .users-table {
+    font-size: 0.9rem;
+  }
+  
+  th, td {
+    padding: 10px;
+  }
+  
+  .pagination {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .search-container input {
+    max-width: 100%;
+  }
+  
+  .role-badge {
+    font-size: 0.75rem;
+    padding: 3px 8px;
+  }
+  
+  .delete-button {
+    padding: 3px 6px;
+    font-size: 0.75rem;
+  }
+}

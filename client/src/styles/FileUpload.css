@@ -309,3 +309,36 @@
   background-color: #4185e1;
   box-shadow: 0 6px 16px rgba(65, 133, 225, 0.8);
 }
+
+/* Add to FileUpload.css */
+@media (max-width: 992px) {
+  .upload-container {
+    padding: 1.5rem;
+  }
+  
+  .upload-box {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .upload-container {
+    padding: 1rem;
+  }
+  
+  .upload-box {
+    padding: 1rem;
+  }
+  
+  .upload-box label {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+  
+  .upload-container select,
+  .upload-container button {
+    margin-left: 0;
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+}

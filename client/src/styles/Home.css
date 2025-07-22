@@ -137,3 +137,39 @@ body.dark .feature-card {
     text-align: center;
   }
 }
+
+/* Add to Home.css */
+@media (max-width: 992px) {
+  .hero-section {
+    padding: 2rem 1rem;
+  }
+  
+  .hero-left,
+  .hero-right {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column;
+  }
+  
+  .hero-right .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+    padding: 1.5rem 0.5rem;
+  }
+  
+  .hero-right .feature-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .get-started-btn {
+    width: 100%;
+  }
+}
