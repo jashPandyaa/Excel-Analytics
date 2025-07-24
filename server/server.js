@@ -2,6 +2,11 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const path = require('path');
+
+// Load environment variables first
+dotenv.config();
+
+// Import and connect to database
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const fileRoutes = require('./routes/fileRoutes');
@@ -10,8 +15,10 @@ const errorMiddleware = require('./middlewares/errorMiddleware');
 const adminRoutes = require('./routes/adminRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 
-dotenv.config();
-connectDB();
+// Connect to database
+connectDB().catch(err => {
+  console.error('Database connection failed:', err);
+});
 
 const app = express();
 
