@@ -1,35 +1,3 @@
-// const express = require('express');
-// const dotenv = require('dotenv');
-// const cors = require('cors');
-// const connectDB = require('./config/db');
-// const authRoutes = require('./routes/authRoutes');
-// const fileRoutes = require('./routes/fileRoutes');
-// const protectedRoutes = require('./routes/protectedRoutes');
-// const errorMiddleware = require('./middlewares/errorMiddleware');
-// const adminRoutes = require('./routes/adminRoutes');
-// const dashboardRoutes = require('./routes/dashboardRoutes');
-
-// dotenv.config();
-// connectDB();
-
-// const app = express();
-// app.use(cors({
-//   origin: 'http://localhost:3000',
-//   credentials: true,
-// }));
-// app.use(express.json());
-
-// app.use('/api/auth', authRoutes);
-// app.use('/api/files', fileRoutes);
-// app.use('/api', protectedRoutes);
-// app.use('/api/admin', adminRoutes);
-// app.use('/api/dashboard', dashboardRoutes);
-
-// app.use(errorMiddleware);
-
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
@@ -66,6 +34,7 @@ app.use('/api', protectedRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
+
 // Serve static files from React app in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
@@ -79,6 +48,10 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(errorMiddleware);
+
+app.get("/" , (req,res) => {
+  res.send("Backend is working properly!")
+})
 
 const PORT = process.env.PORT || 5000;
 
