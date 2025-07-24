@@ -18,7 +18,10 @@ const app = express();
 // CORS configuration for production and development
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? [process.env.FRONTEND_URL || 'https://excel-analytics-jash.vercel.app']
+    ? [
+        process.env.FRONTEND_URL || 'https://excel-analytics-jash.vercel.app',
+        'https://excel-analytics-jash-pandya.vercel.app'
+      ]
     : 'http://localhost:3000',
   credentials: true,
   optionsSuccessStatus: 200
@@ -34,7 +37,6 @@ app.use('/api', protectedRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
-
 // Serve static files from React app in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
@@ -49,15 +51,16 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use(errorMiddleware);
 
-app.get("/" , (req,res) => {
+app.get("/", (req, res) => {
   res.send("Backend is working properly!")
-})
+});
 
 const PORT = process.env.PORT || 5000;
 
-// For Vercel, export the app instead of listening
-if (process.env.NODE_ENV === 'production') {
-  module.exports = app;
-} else {
+// Always export the app for Vercel
+module.exports = app;
+
+// Only listen in development
+if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
