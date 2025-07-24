@@ -37,6 +37,20 @@ app.use('/api', protectedRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
+// Root route - this should handle the base URL
+app.get("/", (req, res) => {
+  res.json({ 
+    message: "Excel Analytics Backend API is running!", 
+    status: "success",
+    endpoints: {
+      auth: "/api/auth",
+      files: "/api/files", 
+      admin: "/api/admin",
+      dashboard: "/api/dashboard"
+    }
+  });
+});
+
 // Serve static files from React app in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
@@ -50,10 +64,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(errorMiddleware);
-
-app.get("/", (req, res) => {
-  res.send("Backend is working properly!")
-});
 
 const PORT = process.env.PORT || 5000;
 
